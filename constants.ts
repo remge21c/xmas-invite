@@ -27,4 +27,4 @@ export const HEADER_IMAGE_URL = "/assets/invitation-image.png";
 // 방법 1: public/assets 폴더에 음악 파일을 넣고 아래 경로를 변경하세요 (예: "/assets/music.mp3")
 // 방법 2: 외부 음악 URL을 사용하세요 (예: "https://example.com/music.mp3")
 // 지원 형식: MP3, OGG, WAV 등
-export const BACKGROUND_MUSIC_URL = "/assets/music.mp3";
+export const BACKGROUND_MUSIC_URL = "/assets/christmas-music.mp3";
