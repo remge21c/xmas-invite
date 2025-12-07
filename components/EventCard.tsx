@@ -91,8 +91,8 @@ export const EventCard: React.FC = () => {
         </div>
 
         {/* Footer Text */}
-        <div className="text-center mt-6 mb-2">
-          <p className="text-gray-500 text-xs tracking-widest uppercase opacity-70">
+        <div className="text-center mt-3 mb-2">
+          <p className="text-gray-500 text-sm tracking-widest uppercase opacity-70">
             절대 망대, 절대 여정, 절대 이정표
           </p>
 
@@ -114,9 +114,9 @@ export const EventCard: React.FC = () => {
                 // 카카오맵 웹 링크로 이동 (앱이 있으면 자동으로 앱에서 열림)
                 window.location.href = kakaoMapUrl;
               }}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-200 border-2 border-yellow-400 rounded-full hover:border-yellow-500 bg-yellow-400 hover:bg-yellow-500 shadow-md hover:shadow-lg cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-700 transition-all duration-200 border border-yellow-300 rounded-full hover:border-yellow-400 bg-yellow-50 hover:bg-yellow-100 shadow-sm hover:shadow cursor-pointer"
             >
-              <MapPin className="w-4 h-4" />
+              <MapPin className="w-3.5 h-3.5" />
               <span>카카오맵</span>
             </button>
             <button
@@ -147,7 +147,7 @@ export const EventCard: React.FC = () => {
                   }
                 }, 2000);
               }}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white transition-all duration-200 border-2 border-orange-500 rounded-full hover:border-orange-600 bg-orange-500 hover:bg-orange-600 shadow-md hover:shadow-lg cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-700 transition-all duration-200 border border-orange-300 rounded-full hover:border-orange-400 bg-orange-50 hover:bg-orange-100 shadow-sm hover:shadow cursor-pointer"
             >
               <MapPin className="w-3.5 h-3.5" />
               <span>T맵</span>
