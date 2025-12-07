@@ -105,39 +105,19 @@ export const EventCard: React.FC = () => {
                   (window as any).stopBackgroundMusic();
                 }
 
-                const destinationName = '믿음의교회';
-                // 정확한 좌표 (믿음의교회 - WGS84)
-                const latitude = 35.258888637815;
-                const longitude = 128.63345001073;
-
-                const userAgent = navigator.userAgent.toLowerCase();
-                const isAndroid = userAgent.indexOf('android') > -1;
-                const isIOS = userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1;
-
-                // 카카오네비 앱 딥링크: 목적지 좌표로 길안내
-                const kakaoNaviScheme = `kakaonavi://route?ep=${latitude},${longitude}&by=CAR&ep_name=${encodeURIComponent(destinationName)}`;
-
-                // 앱 실행 시도
-                window.location.href = kakaoNaviScheme;
-
-                // 앱이 설치되지 않은 경우 대비 (2초 후 앱스토어/웹으로 이동)
-                setTimeout(() => {
-                  if (isAndroid) {
-                    // Android: 카카오네비 앱 설치 페이지
-                    window.location.href = 'https://play.google.com/store/apps/details?id=com.locnall.KimGiSa';
-                  } else if (isIOS) {
-                    // iOS: 카카오네비 앱 설치 페이지
-                    window.location.href = 'https://apps.apple.com/kr/app/id417698849';
-                  } else {
-                    // PC 웹: 카카오맵 웹에서 길찾기
-                    window.location.href = `https://map.kakao.com/link/to/${encodeURIComponent(destinationName)},${latitude},${longitude}`;
-                  }
-                }, 2000);
+                const address = '창원시 의창구 도계로 4번길 8 일출빌딩';
+                const encodedAddress = encodeURIComponent(address);
+                
+                // 카카오맵 검색 URL (주소 기반)
+                const kakaoMapUrl = `https://map.kakao.com/link/search/${encodedAddress}`;
+                
+                // 카카오맵 웹 링크로 이동 (앱이 있으면 자동으로 앱에서 열림)
+                window.location.href = kakaoMapUrl;
               }}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-600 hover:text-gold-500 transition-colors border border-gray-200 rounded-full hover:border-gold-300 bg-white/50 cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-200 border-2 border-yellow-400 rounded-full hover:border-yellow-500 bg-yellow-400 hover:bg-yellow-500 shadow-md hover:shadow-lg cursor-pointer"
             >
-              <MapPin className="w-3.5 h-3.5" />
-              <span>카카오네비</span>
+              <MapPin className="w-4 h-4" />
+              <span>카카오맵</span>
             </button>
             <button
               onClick={() => {
@@ -146,18 +126,14 @@ export const EventCard: React.FC = () => {
                   (window as any).stopBackgroundMusic();
                 }
 
-                const destinationName = '믿음의교회';
-                // 정확한 좌표 (믿음의교회)
-                const latitude = 35.258888637815;
-                const longitude = 128.63345001073;
-
+                const address = '창원시 의창구 도계로 4번길 8 일출빌딩';
+                
                 const userAgent = navigator.userAgent.toLowerCase();
                 const isAndroid = userAgent.indexOf('android') > -1;
                 const isIOS = userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1;
 
-                // T맵 딥링크: 목적지 좌표로 경로 안내
-                // goalname: 목적지명, goalx: 경도, goaly: 위도
-                const tmapScheme = `tmap://route?goalname=${encodeURIComponent(destinationName)}&goalx=${longitude}&goaly=${latitude}`;
+                // T맵 검색 URL (주소 기반)
+                const tmapScheme = `tmap://search?name=${encodeURIComponent(address)}`;
 
                 // 앱 실행 시도
                 window.location.href = tmapScheme;
@@ -171,11 +147,18 @@ export const EventCard: React.FC = () => {
                   }
                 }, 2000);
               }}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-600 hover:text-gold-500 transition-colors border border-gray-200 rounded-full hover:border-gold-300 bg-white/50 cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white transition-all duration-200 border-2 border-orange-500 rounded-full hover:border-orange-600 bg-orange-500 hover:bg-orange-600 shadow-md hover:shadow-lg cursor-pointer"
             >
               <MapPin className="w-3.5 h-3.5" />
               <span>T맵</span>
             </button>
+          </div>
+          
+          {/* 주소 표시 */}
+          <div className="text-center mt-3">
+            <p className="text-gray-600 text-xs">
+              창원시 의창구 도계로 4번길 8 일출빌딩
+            </p>
           </div>
         </div>
       </div>
