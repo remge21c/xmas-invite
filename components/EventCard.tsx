@@ -95,6 +95,28 @@ export const EventCard: React.FC = () => {
           <p className="text-gray-500 text-xs tracking-widest uppercase opacity-70">
             절대 망대, 절대 여정, 절대 이정표
           </p>
+          
+          {/* 맵 버튼 */}
+          <div className="flex justify-center gap-3 mt-4">
+            <a
+              href="https://map.kakao.com/link/search/창원시 의창구 도계로4번길 8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-600 hover:text-gold-500 transition-colors border border-gray-200 rounded-full hover:border-gold-300 bg-white/50"
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              <span>카카오맵</span>
+            </a>
+            <a
+              href="https://tmapapi.sktelecom.com/main/mobile/webview/index.html?targetApp=route&targetName=창원시 의창구 도계로4번길 8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-600 hover:text-gold-500 transition-colors border border-gray-200 rounded-full hover:border-gold-300 bg-white/50"
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              <span>T맵</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
