@@ -9,14 +9,14 @@ export const EventCard: React.FC = () => {
       <div className="relative bg-[#f8f5f2] w-full">
         {/* Decorative foliage - purely CSS/Tailwind simulation for the 'leaves' in the corner */}
         <div className="absolute top-0 left-0 w-32 h-32 opacity-20 pointer-events-none overflow-hidden z-10">
-             <div className="absolute -top-10 -left-10 w-24 h-48 bg-stone-400 rotate-45 transform blur-xl"></div>
+          <div className="absolute -top-10 -left-10 w-24 h-48 bg-stone-400 rotate-45 transform blur-xl"></div>
         </div>
-        
+
         {/* Main Card Image - 전체 영역 채우기 */}
         <div className="relative w-full">
-          <img 
-            src={HEADER_IMAGE_URL} 
-            alt="Christmas Cantata Main Card" 
+          <img
+            src={HEADER_IMAGE_URL}
+            alt="Christmas Cantata Main Card"
             className="w-full h-auto object-contain"
           />
         </div>
@@ -24,7 +24,7 @@ export const EventCard: React.FC = () => {
 
       {/* Content Section */}
       <div className="px-6 pt-4 pb-4 bg-white relative">
-        
+
         {/* Info Box */}
         <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 shadow-sm">
           {/* 초대 문구 */}
@@ -32,10 +32,10 @@ export const EventCard: React.FC = () => {
             크리스마스의 참된 의미를 담은 이야기 속으로<br />
             여러분을 초대합니다.
           </p>
-          
+
           {/* 구분선 */}
           <div className="w-full h-px bg-gray-300 mb-6"></div>
-          
+
           <div className="space-y-6">
             {/* Date */}
             <div className="flex items-start gap-4">
@@ -50,7 +50,7 @@ export const EventCard: React.FC = () => {
 
             {/* Location */}
             <div className="flex items-start gap-4">
-               <div className="w-6 h-6 flex-shrink-0 flex items-center justify-center mt-0.5">
+              <div className="w-6 h-6 flex-shrink-0 flex items-center justify-center mt-0.5">
                 <MapPin className="w-5 h-5 text-gold-500" />
               </div>
               <div>
@@ -95,7 +95,7 @@ export const EventCard: React.FC = () => {
           <p className="text-gray-500 text-xs tracking-widest uppercase opacity-70">
             절대 망대, 절대 여정, 절대 이정표
           </p>
-          
+
           {/* 맵 버튼 */}
           <div className="flex justify-center gap-3 mt-4">
             <button
@@ -104,23 +104,33 @@ export const EventCard: React.FC = () => {
                 if ((window as any).stopBackgroundMusic) {
                   (window as any).stopBackgroundMusic();
                 }
-                
-                const address = '창원시 의창구 도계로4번길 8';
-                const encodedAddress = encodeURIComponent(address);
-                
-                // 카카오네비 앱 스킴 (주소를 name 파라미터로 사용)
-                const kakaoNaviScheme = `kakaonavi://navigate?name=${encodedAddress}`;
-                
-                // 카카오네비 앱 실행 시도
+
+                const destinationName = '믿음의교회';
+                // 정확한 좌표 (믿음의교회 - WGS84)
+                const latitude = 35.258888637815;
+                const longitude = 128.63345001073;
+
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isAndroid = userAgent.indexOf('android') > -1;
+                const isIOS = userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1;
+
+                // 카카오네비 앱 딥링크: 목적지 좌표로 길안내
+                const kakaoNaviScheme = `kakaonavi://route?ep=${latitude},${longitude}&by=CAR&ep_name=${encodeURIComponent(destinationName)}`;
+
+                // 앱 실행 시도
                 window.location.href = kakaoNaviScheme;
-                
-                // 앱이 설치되지 않은 경우 대비 (2초 후 앱스토어로 이동)
+
+                // 앱이 설치되지 않은 경우 대비 (2초 후 앱스토어/웹으로 이동)
                 setTimeout(() => {
-                  const userAgent = navigator.userAgent.toLowerCase();
-                  if (userAgent.indexOf('android') > -1) {
+                  if (isAndroid) {
+                    // Android: 카카오네비 앱 설치 페이지
                     window.location.href = 'https://play.google.com/store/apps/details?id=com.locnall.KimGiSa';
-                  } else if (userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1) {
+                  } else if (isIOS) {
+                    // iOS: 카카오네비 앱 설치 페이지
                     window.location.href = 'https://apps.apple.com/kr/app/id417698849';
+                  } else {
+                    // PC 웹: 카카오맵 웹에서 길찾기
+                    window.location.href = `https://map.kakao.com/link/to/${encodeURIComponent(destinationName)},${latitude},${longitude}`;
                   }
                 }, 2000);
               }}
@@ -135,21 +145,28 @@ export const EventCard: React.FC = () => {
                 if ((window as any).stopBackgroundMusic) {
                   (window as any).stopBackgroundMusic();
                 }
-                
-                const address = '창원시 의창구 도계로4번길 8';
-                
-                // T맵 검색 URL (주소 기반)
-                const tmapScheme = `tmap://search?name=${encodeURIComponent(address)}`;
-                
+
+                const destinationName = '믿음의교회';
+                // 정확한 좌표 (믿음의교회)
+                const latitude = 35.258888637815;
+                const longitude = 128.63345001073;
+
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isAndroid = userAgent.indexOf('android') > -1;
+                const isIOS = userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1;
+
+                // T맵 딥링크: 목적지 좌표로 경로 안내
+                // goalname: 목적지명, goalx: 경도, goaly: 위도
+                const tmapScheme = `tmap://route?goalname=${encodeURIComponent(destinationName)}&goalx=${longitude}&goaly=${latitude}`;
+
                 // 앱 실행 시도
                 window.location.href = tmapScheme;
-                
+
                 // 앱이 설치되지 않은 경우 대비 (2초 후 앱스토어로 이동)
                 setTimeout(() => {
-                  const userAgent = navigator.userAgent.toLowerCase();
-                  if (userAgent.indexOf('android') > -1) {
+                  if (isAndroid) {
                     window.location.href = 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku';
-                  } else if (userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1) {
+                  } else if (isIOS) {
                     window.location.href = 'https://apps.apple.com/kr/app/id431589174';
                   }
                 }, 2000);
