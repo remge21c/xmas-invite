@@ -106,12 +106,13 @@ export const EventCard: React.FC = () => {
                 }
                 
                 const address = '창원시 의창구 도계로4번길 8';
+                const encodedAddress = encodeURIComponent(address);
                 
-                // 카카오맵 검색 URL (주소 기반)
-                const kakaoScheme = `kakaomap://search?q=${encodeURIComponent(address)}&by=CAR`;
+                // 카카오네비 앱 스킴 (주소를 name 파라미터로 사용)
+                const kakaoNaviScheme = `kakaonavi://navigate?name=${encodedAddress}`;
                 
-                // 앱 실행 시도
-                window.location.href = kakaoScheme;
+                // 카카오네비 앱 실행 시도
+                window.location.href = kakaoNaviScheme;
                 
                 // 앱이 설치되지 않은 경우 대비 (2초 후 앱스토어로 이동)
                 setTimeout(() => {
