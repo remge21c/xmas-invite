@@ -8,9 +8,9 @@ export const EVENT_DATA: EventDetails = {
   location: "믿음의교회 본당 (지하 1층)",
   contact: "055-238-4200",
   program: [
-    "- 다윗성가대",
-    "- 주일학교",
-    "- 2남선교회"
+    "다윗성가대",
+    "주일학교",
+    "2남선교회"
   ]
 };
 
