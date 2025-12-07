@@ -105,11 +105,10 @@ export const EventCard: React.FC = () => {
                   (window as any).stopBackgroundMusic();
                 }
                 
-                const destination = '창원시 의창구 도계로4번길 8';
-                const encodedDestination = encodeURIComponent(destination);
+                const address = '창원시 의창구 도계로4번길 8';
                 
-                // 카카오네비 앱 스킴 (주소 검색 방식)
-                const kakaoScheme = `kakaomap://search?q=${encodedDestination}`;
+                // 카카오맵 검색 URL (주소 기반)
+                const kakaoScheme = `kakaomap://search?q=${encodeURIComponent(address)}&by=CAR`;
                 
                 // 앱 실행 시도
                 window.location.href = kakaoScheme;
@@ -136,10 +135,10 @@ export const EventCard: React.FC = () => {
                   (window as any).stopBackgroundMusic();
                 }
                 
-                const destination = '창원시 의창구 도계로4번길 8';
+                const address = '창원시 의창구 도계로4번길 8';
                 
-                // T맵 앱 스킴 (주소만 사용)
-                const tmapScheme = `tmap://route?goalname=${encodeURIComponent(destination)}`;
+                // T맵 검색 URL (주소 기반)
+                const tmapScheme = `tmap://search?name=${encodeURIComponent(address)}`;
                 
                 // 앱 실행 시도
                 window.location.href = tmapScheme;
