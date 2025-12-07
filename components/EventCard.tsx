@@ -76,7 +76,7 @@ export const EventCard: React.FC = () => {
                 <List className="w-5 h-5 text-gold-500" />
               </div>
               <div className="flex-1">
-                <h3 className="text-gray-900 font-bold text-base mb-2">행사 순서</h3>
+                <h3 className="text-gray-900 font-bold text-base mb-2">출연</h3>
                 <ul className="space-y-1.5">
                   {EVENT_DATA.program.map((item, index) => (
                     <li key={index} className="text-gray-600 text-sm font-light">
