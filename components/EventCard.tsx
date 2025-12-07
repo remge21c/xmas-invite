@@ -107,10 +107,13 @@ export const EventCard: React.FC = () => {
                 
                 const address = '창원시 의창구 도계로4번길 8';
                 const encodedAddress = encodeURIComponent(address);
-                const kakaoNaviUrl = `kakaonavi://search?q=${encodedAddress}`;
+                
+                // 카카오네비 딥링크 (navigate 방식 - 카카오네비 전용)
+                const kakaoNaviUrl = `kakaonavi://navigate?name=${encodedAddress}`;
+                // 카카오맵 웹 링크 (fallback)
                 const kakaoWebUrl = `https://map.kakao.com/link/search/${encodedAddress}`;
                 
-                // 앱 실행 시도
+                // 카카오네비 앱 실행 시도
                 const startTime = Date.now();
                 window.location.href = kakaoNaviUrl;
                 
