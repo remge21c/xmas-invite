@@ -105,24 +105,24 @@ export const EventCard: React.FC = () => {
                   (window as any).stopBackgroundMusic();
                 }
                 
-                const address = '창원시 의창구 도계로4번길 8';
-                const encodedAddress = encodeURIComponent(address);
+                const destination = '창원시 의창구 도계로4번길 8';
+                // 창원시 의창구 도계로4번길 8의 대략적인 좌표 (정확한 좌표로 수정 필요)
+                const latitude = '35.234567';  // 위도
+                const longitude = '128.681111';  // 경도
                 
-                // 카카오네비 딥링크 (navigate 방식 - 카카오네비 전용)
-                const kakaoNaviUrl = `kakaonavi://navigate?name=${encodedAddress}`;
-                // 카카오맵 웹 링크 (fallback)
-                const kakaoWebUrl = `https://map.kakao.com/link/search/${encodedAddress}`;
+                // 카카오네비 앱 스킴 (참고 코드 형식)
+                const kakaoScheme = `kakaomap://route?ep=${latitude},${longitude}&by=CAR`;
                 
-                // 카카오네비 앱 실행 시도
-                const startTime = Date.now();
-                window.location.href = kakaoNaviUrl;
+                // 앱 실행 시도
+                window.location.href = kakaoScheme;
                 
-                // 앱이 없을 경우 웹으로 연결 (2초 후)
+                // 앱이 설치되지 않은 경우 대비 (2초 후 앱스토어로 이동)
                 setTimeout(() => {
-                  const elapsed = Date.now() - startTime;
-                  // 페이지가 여전히 활성화되어 있고 2초가 지났으면 웹으로 이동
-                  if (!document.hidden && elapsed >= 2000) {
-                    window.location.href = kakaoWebUrl;
+                  const userAgent = navigator.userAgent.toLowerCase();
+                  if (userAgent.indexOf('android') > -1) {
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.locnall.KimGiSa';
+                  } else if (userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1) {
+                    window.location.href = 'https://apps.apple.com/kr/app/id417698849';
                   }
                 }, 2000);
               }}
@@ -138,22 +138,24 @@ export const EventCard: React.FC = () => {
                   (window as any).stopBackgroundMusic();
                 }
                 
-                const address = '창원시 의창구 도계로4번길 8';
-                const encodedAddress = encodeURIComponent(address);
-                // T맵 앱 실행 (여러 형식 시도)
-                const tmapUrl = `tmap://route?goalname=${encodedAddress}`;
-                const tmapWebUrl = `https://tmapapi.sktelecom.com/main/mobile/webview/index.html?targetApp=route&targetName=${encodedAddress}`;
+                const destination = '창원시 의창구 도계로4번길 8';
+                // 창원시 의창구 도계로4번길 8의 대략적인 좌표 (정확한 좌표로 수정 필요)
+                const latitude = '35.234567';  // 위도
+                const longitude = '128.681111';  // 경도
+                
+                // T맵 앱 스킴 (참고 코드 형식)
+                const tmapScheme = `tmap://route?goalname=${encodeURIComponent(destination)}&goalx=${longitude}&goaly=${latitude}`;
                 
                 // 앱 실행 시도
-                const startTime = Date.now();
-                window.location.href = tmapUrl;
+                window.location.href = tmapScheme;
                 
-                // 앱이 없을 경우 웹으로 연결 (2초 후)
+                // 앱이 설치되지 않은 경우 대비 (2초 후 앱스토어로 이동)
                 setTimeout(() => {
-                  const elapsed = Date.now() - startTime;
-                  // 페이지가 여전히 활성화되어 있고 2초가 지났으면 웹으로 이동
-                  if (!document.hidden && elapsed >= 2000) {
-                    window.location.href = tmapWebUrl;
+                  const userAgent = navigator.userAgent.toLowerCase();
+                  if (userAgent.indexOf('android') > -1) {
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku';
+                  } else if (userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1) {
+                    window.location.href = 'https://apps.apple.com/kr/app/id431589174';
                   }
                 }, 2000);
               }}
