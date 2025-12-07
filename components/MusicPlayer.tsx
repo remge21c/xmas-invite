@@ -3,35 +3,89 @@ import { Music, Pause, Volume2, VolumeX } from 'lucide-react';
 import { BACKGROUND_MUSIC_URL } from '../constants';
 
 export const MusicPlayer: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState(true); // 초기값을 true로 설정
+  // localStorage에서 저장된 음악 재생 상태 불러오기
+  const getStoredMusicState = (): boolean => {
+    const stored = localStorage.getItem('backgroundMusicPlaying');
+    return stored !== null ? stored === 'true' : true; // 기본값은 true
+  };
+
+  const [isPlaying, setIsPlaying] = useState(getStoredMusicState());
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // 컴포넌트 마운트 시 자동 재생 시도
+  // 컴포넌트 마운트 시 저장된 상태에 따라 재생
   useEffect(() => {
     if (audioRef.current) {
       // 약간의 지연을 두어 브라우저가 준비될 시간을 줍니다
       const timer = setTimeout(() => {
-        audioRef.current?.play().catch(e => {
-          console.error("Audio playback failed:", e);
-          // 자동 재생이 실패하면 상태를 false로 변경
-          setIsPlaying(false);
-        });
+        if (isPlaying) {
+          audioRef.current?.play().catch(e => {
+            console.error("Audio playback failed:", e);
+            // 자동 재생이 실패하면 상태를 false로 변경
+            setIsPlaying(false);
+            localStorage.setItem('backgroundMusicPlaying', 'false');
+          });
+        }
       }, 100);
       
       return () => clearTimeout(timer);
     }
   }, []);
 
+  // 음악 정지 함수를 전역에 등록 (맵 버튼용 - 설정 저장하지 않음)
+  useEffect(() => {
+    const stopMusic = () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        // 상태는 변경하지만 localStorage에는 저장하지 않음 (일시적 정지)
+        setIsPlaying(false);
+      }
+    };
+    (window as any).stopBackgroundMusic = stopMusic;
+    
+    return () => {
+      delete (window as any).stopBackgroundMusic;
+    };
+  }, []);
+
+  // 페이지가 다시 포커스를 받았을 때 저장된 설정으로 복원
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && audioRef.current) {
+        // 저장된 설정 확인
+        const shouldPlay = getStoredMusicState();
+        setIsPlaying(shouldPlay);
+        
+        if (shouldPlay) {
+          audioRef.current.play().catch(e => {
+            console.error("Audio playback failed:", e);
+          });
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  // 사용자가 직접 버튼을 눌렀을 때만 설정 저장
   const togglePlay = () => {
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
+      const newPlayingState = !isPlaying;
+      
+      if (newPlayingState) {
         audioRef.current.play().catch(e => {
           console.error("Audio playback failed:", e);
         });
+      } else {
+        audioRef.current.pause();
       }
-      setIsPlaying(!isPlaying);
+      
+      setIsPlaying(newPlayingState);
+      // 사용자가 직접 조작한 경우에만 localStorage에 저장
+      localStorage.setItem('backgroundMusicPlaying', String(newPlayingState));
     }
   };
 

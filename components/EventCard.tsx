@@ -99,19 +99,47 @@ export const EventCard: React.FC = () => {
           {/* 맵 버튼 */}
           <div className="flex justify-center gap-3 mt-4">
             <a
-              href="https://map.kakao.com/link/search/창원시 의창구 도계로4번길 8"
+              href="kakaonavi://route?ep=창원시 의창구 도계로4번길 8"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-600 hover:text-gold-500 transition-colors border border-gray-200 rounded-full hover:border-gold-300 bg-white/50"
+              onClick={(e) => {
+                // 배경음악 정지
+                if ((window as any).stopBackgroundMusic) {
+                  (window as any).stopBackgroundMusic();
+                }
+                // 앱이 없을 경우 웹으로 연결
+                const link = e.currentTarget;
+                setTimeout(() => {
+                  if (document.hidden) {
+                    link.href = 'https://map.kakao.com/link/search/창원시 의창구 도계로4번길 8';
+                  }
+                }, 500);
+              }}
             >
               <MapPin className="w-3.5 h-3.5" />
-              <span>카카오맵</span>
+              <span>카카오네비</span>
             </a>
             <a
-              href="https://tmapapi.sktelecom.com/main/mobile/webview/index.html?targetApp=route&targetName=창원시 의창구 도계로4번길 8"
+              href="tmap://route?goalname=창원시 의창구 도계로4번길 8"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-600 hover:text-gold-500 transition-colors border border-gray-200 rounded-full hover:border-gold-300 bg-white/50"
+              onClick={(e) => {
+                // 배경음악 정지
+                if ((window as any).stopBackgroundMusic) {
+                  (window as any).stopBackgroundMusic();
+                }
+                // 앱이 없을 경우 웹으로 연결
+                const link = e.currentTarget;
+                const originalHref = link.href;
+                setTimeout(() => {
+                  // 앱이 열리지 않았으면 웹 링크로 변경
+                  if (!document.hidden) {
+                    window.location.href = 'https://tmapapi.sktelecom.com/main/mobile/webview/index.html?targetApp=route&targetName=창원시 의창구 도계로4번길 8';
+                  }
+                }, 1000);
+              }}
             >
               <MapPin className="w-3.5 h-3.5" />
               <span>T맵</span>
