@@ -106,12 +106,10 @@ export const EventCard: React.FC = () => {
                 }
                 
                 const destination = '창원시 의창구 도계로4번길 8';
-                // 창원시 의창구 도계로4번길 8의 대략적인 좌표 (정확한 좌표로 수정 필요)
-                const latitude = '35.234567';  // 위도
-                const longitude = '128.681111';  // 경도
+                const encodedDestination = encodeURIComponent(destination);
                 
-                // 카카오네비 앱 스킴 (참고 코드 형식)
-                const kakaoScheme = `kakaomap://route?ep=${latitude},${longitude}&by=CAR`;
+                // 카카오네비 앱 스킴 (주소 검색 방식)
+                const kakaoScheme = `kakaomap://search?q=${encodedDestination}`;
                 
                 // 앱 실행 시도
                 window.location.href = kakaoScheme;
@@ -139,12 +137,9 @@ export const EventCard: React.FC = () => {
                 }
                 
                 const destination = '창원시 의창구 도계로4번길 8';
-                // 창원시 의창구 도계로4번길 8의 대략적인 좌표 (정확한 좌표로 수정 필요)
-                const latitude = '35.234567';  // 위도
-                const longitude = '128.681111';  // 경도
                 
-                // T맵 앱 스킴 (참고 코드 형식)
-                const tmapScheme = `tmap://route?goalname=${encodeURIComponent(destination)}&goalx=${longitude}&goaly=${latitude}`;
+                // T맵 앱 스킴 (주소만 사용)
+                const tmapScheme = `tmap://route?goalname=${encodeURIComponent(destination)}`;
                 
                 // 앱 실행 시도
                 window.location.href = tmapScheme;
