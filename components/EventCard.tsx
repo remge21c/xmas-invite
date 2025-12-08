@@ -105,7 +105,7 @@ export const EventCard: React.FC = () => {
                   (window as any).stopBackgroundMusic();
                 }
 
-                const address = '창원시 의창구 도계로 4번길 8 일출빌딩';
+                const address = '창원시 의창구 도계로 4번길 8 믿음의 교회';
                 const encodedAddress = encodeURIComponent(address);
                 
                 // 카카오맵 검색 URL (주소 기반)
@@ -126,7 +126,7 @@ export const EventCard: React.FC = () => {
                   (window as any).stopBackgroundMusic();
                 }
 
-                const address = '창원시 의창구 도계로 4번길 8 일출빌딩';
+                const address = '창원시 의창구 도계로 4번길 8 믿음의 교회';
                 
                 const userAgent = navigator.userAgent.toLowerCase();
                 const isAndroid = userAgent.indexOf('android') > -1;
@@ -157,7 +157,7 @@ export const EventCard: React.FC = () => {
           {/* 주소 표시 */}
           <div className="text-center mt-3">
             <p className="text-gray-600 text-xs">
-              창원시 의창구 도계로 4번길 8 일출빌딩
+              창원시 의창구 도계로 4번길 8 믿음의 교회
             </p>
           </div>
         </div>
